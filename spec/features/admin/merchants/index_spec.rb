@@ -102,8 +102,8 @@ RSpec.describe 'Admin Merchant Index Page' do
     @invoiceA2 = @customer1.invoices.create!(status: "Completed", created_at: "2012-03-28 14:53:59")
     @invoiceA3 = @customer1.invoices.create!(status: "Completed", created_at: "2012-03-28 14:53:59")
     @invoiceB1 = @customer1.invoices.create!(status: "Completed", created_at: "2012-03-29 14:53:59")
-    @invoiceB2 = @customer1.invoices.create!(status: "Completed", created_at: "2012-03-30 14:53:59")      
-    @invoiceB3 = @customer1.invoices.create!(status: "Completed", created_at: "2012-03-30 14:53:59")     
+    @invoiceB2 = @customer1.invoices.create!(status: "Completed", created_at: "2012-03-30 14:53:59")
+    @invoiceB3 = @customer1.invoices.create!(status: "Completed", created_at: "2012-03-30 14:53:59")
     @invoiceD1 = @customer1.invoices.create!(status: "Completed", created_at: "2012-03-01 14:53:59")
     @invoiceD2 = @customer1.invoices.create!(status: "Completed", created_at: "2012-03-02 14:53:59")
     @invoiceD3 = @customer1.invoices.create!(status: "Completed", created_at: "2012-03-02 14:53:59")
@@ -147,7 +147,6 @@ RSpec.describe 'Admin Merchant Index Page' do
     @invoice_itemE3 = @invoiceE3.invoice_items.create!(quantity: 3, unit_price: 2, item_id: @itemE.id, status: "shipped")
 
     visit admin_merchants_path
-status
     expect(page).to have_content("Top selling date for merchantA was Wednesday, March 28, 2012")
     expect(page).to have_content("Top selling date for merchantB was Friday, March 30, 2012")
     expect(page).to have_content("Top selling date for merchantD was Friday, March 2, 2012")
