@@ -29,25 +29,25 @@ RSpec.describe Merchant, type: :model do
       @stuff4 = @chris.items.create!(name: "stuff6", description: "Moody", unit_price: 6002)
       @stuff5 = @mikedao.items.create!(name: "stuff8", description: "Moody", unit_price: 7002)
 
-      @invoice1 = @brenda.invoices.create!(status: "In Progress")
-      @invoice2 = @brenda.invoices.create!(status: "Completed")
-      @invoice3 = @brenda.invoices.create!(status: "Completed")
-      @invoice4 = @brenda.invoices.create!(status: "Completed")
+      @invoice1 = @brenda.invoices.create!(status: "in progress")
+      @invoice2 = @brenda.invoices.create!(status: "completed")
+      @invoice3 = @brenda.invoices.create!(status: "completed")
+      @invoice4 = @brenda.invoices.create!(status: "completed")
 
       @transaction1 = @invoice1.transactions.create!(credit_card_number: 4654405418249632, result: "success", created_at: Time.now, updated_at: Time.now)
       @transaction2 = @invoice2.transactions.create!(credit_card_number: 4654405418249632, result: "success", created_at: Time.now, updated_at: Time.now)
       @transaction3 = @invoice3.transactions.create!(credit_card_number: 4654405418249632, result: "success", created_at: Time.now, updated_at: Time.now)
       @transaction4 = @invoice4.transactions.create!(credit_card_number: 4654405418249632, result: "success", created_at: Time.now, updated_at: Time.now)
 
-      @order1 = @bracelet.invoice_items.create!(quantity: 1, unit_price: 1001, status: "Pending", invoice_id: @invoice1.id)
-      @order2 = @mood.invoice_items.create!(quantity: 1, unit_price: 2002, status: "Packaged", invoice_id: @invoice1.id)
-      @order3 = @mood.invoice_items.create!(quantity: 3, unit_price: 2002, status: "Shipped", invoice_id: @invoice2.id)
-      
-      InvoiceItem.create!(item_id: @stuff1.id, invoice_id: @invoice2.id, quantity: 1, unit_price: 1000, status: "Shipped")
-      InvoiceItem.create!(item_id: @stuff2.id, invoice_id: @invoice3.id, quantity: 2, unit_price: 1000, status: "Shipped")
-      InvoiceItem.create!(item_id: @stuff3.id, invoice_id: @invoice4.id, quantity: 3, unit_price: 1000, status: "Shipped")
-      InvoiceItem.create!(item_id: @stuff4.id, invoice_id: @invoice3.id, quantity: 4, unit_price: 1000, status: "Shipped")
-      InvoiceItem.create!(item_id: @stuff5.id, invoice_id: @invoice4.id, quantity: 5, unit_price: 1000, status: "Shipped")
+      @order1 = @bracelet.invoice_items.create!(quantity: 1, unit_price: 1001, status: "pending", invoice_id: @invoice1.id)
+      @order2 = @mood.invoice_items.create!(quantity: 1, unit_price: 2002, status: "packaged", invoice_id: @invoice1.id)
+      @order3 = @mood.invoice_items.create!(quantity: 3, unit_price: 2002, status: "shipped", invoice_id: @invoice2.id)
+
+      InvoiceItem.create!(item_id: @stuff1.id, invoice_id: @invoice2.id, quantity: 1, unit_price: 1000, status: "shipped")
+      InvoiceItem.create!(item_id: @stuff2.id, invoice_id: @invoice3.id, quantity: 2, unit_price: 1000, status: "shipped")
+      InvoiceItem.create!(item_id: @stuff3.id, invoice_id: @invoice4.id, quantity: 3, unit_price: 1000, status: "shipped")
+      InvoiceItem.create!(item_id: @stuff4.id, invoice_id: @invoice3.id, quantity: 4, unit_price: 1000, status: "shipped")
+      InvoiceItem.create!(item_id: @stuff5.id, invoice_id: @invoice4.id, quantity: 5, unit_price: 1000, status: "shipped")
     end
 
     it 'items_to_ship returns an array of items that are not shipped' do
@@ -114,12 +114,12 @@ RSpec.describe Merchant, type: :model do
       transaction10 = invoice5.transactions.create!(credit_card_number: 4654405418249632, result: "success", created_at: Time.now, updated_at: Time.now)
       transaction11 = invoice6.transactions.create!(credit_card_number: 4654405418249632, result: "success", created_at: Time.now, updated_at: Time.now)
 
-      order1 = @bracelet.invoice_items.create!(quantity: 1, unit_price: 1001, status: "Pending", invoice_id: invoice1.id)
-      order2 = @bracelet.invoice_items.create!(quantity: 1, unit_price: 1001, status: "Pending", invoice_id: invoice2.id)
-      order3 = @bracelet.invoice_items.create!(quantity: 1, unit_price: 1001, status: "Pending", invoice_id: invoice3.id)
-      order4 = @bracelet.invoice_items.create!(quantity: 1, unit_price: 1001, status: "Pending", invoice_id: invoice4.id)
-      order5 = @bracelet.invoice_items.create!(quantity: 1, unit_price: 1001, status: "Pending", invoice_id: invoice5.id)
-      order6 = @bracelet.invoice_items.create!(quantity: 1, unit_price: 1001, status: "Pending", invoice_id: invoice6.id)
+      order1 = @bracelet.invoice_items.create!(quantity: 1, unit_price: 1001, status: "pending", invoice_id: invoice1.id)
+      order2 = @bracelet.invoice_items.create!(quantity: 1, unit_price: 1001, status: "pending", invoice_id: invoice2.id)
+      order3 = @bracelet.invoice_items.create!(quantity: 1, unit_price: 1001, status: "pending", invoice_id: invoice3.id)
+      order4 = @bracelet.invoice_items.create!(quantity: 1, unit_price: 1001, status: "pending", invoice_id: invoice4.id)
+      order5 = @bracelet.invoice_items.create!(quantity: 1, unit_price: 1001, status: "pending", invoice_id: invoice5.id)
+      order6 = @bracelet.invoice_items.create!(quantity: 1, unit_price: 1001, status: "pending", invoice_id: invoice6.id)
 
       expect(@billman.fave_customers).to eq([@brenda, parker, nick, chris, sai])
       expect(@billman.fave_customers).to_not eq([deannah])
