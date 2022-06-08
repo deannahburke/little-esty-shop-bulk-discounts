@@ -9,3 +9,12 @@
     <p><%= item.name %>-Invoice <%= link_to "##{item.invoice_id}", "/merchants/#{@merchant.id}/invoices/#{item.invoice_id}" %></p>
     <% end %>
 </section>
+
+<section id="top5customers">
+  <h4>Top 5 Customers</h4>
+  <% @merchant.fave_customers.each_with_index do |customer, index| %>
+  <div id="customer-<%= index %>">
+    <p><%= "#{customer.first_name} #{customer.last_name}- #{customer.count} Transactions" %>
+      <% end %>
+    </div>
+  </section>

@@ -58,6 +58,11 @@ RSpec.describe 'Merchant Show Dash' do
     @transaction8 = @invoice8.transactions.create!(credit_card_number: 4540842003561938, result: "success")
     @transaction9 = @invoice9.transactions.create!(credit_card_number: 4140149827486249, result: "success")
     @transaction10 = @invoice10.transactions.create!(credit_card_number: 4923661117104166, result: "success")
+    @transaction11 = @invoice10.transactions.create!(credit_card_number: 4923661117104166, result: "success")
+    @transaction12 = @invoice10.transactions.create!(credit_card_number: 4923661117104166, result: "success")
+    @transaction12 = @invoice5.transactions.create!(credit_card_number: 4923661117104166, result: "success")
+    @transaction13 = @invoice1.transactions.create!(credit_card_number: 4923661117104166, result: "success")
+    @transaction14 = @invoice6.transactions.create!(credit_card_number: 4923661117104166, result: "success")
   end
 
   it "has the name of the merchant on the page" do
@@ -103,4 +108,26 @@ RSpec.describe 'Merchant Show Dash' do
     end
   end
 
+  it 'displays the names of the top five customers' do
+    visit "/merchants/#{@billman.id}/dashboard"
+
+    within '#top5customers' do
+      expect(page).to have_content("Top 5 Customers")
+      within("#customer-0") do
+        expect(page).to have_content("Mike Ado")
+      end
+      within("#customer-1") do
+        expect(page).to have_content("Brenda Bhoddavista")
+      end
+      within("#customer-2") do
+        expect(page).to have_content("Jimbob Dudeguy")
+      end
+      within("#customer-3") do
+        expect(page).to have_content("Nick Jocabs")
+      end
+      within("#customer-4") do
+        expect(page).to have_content("Casey Zafio")
+      end
+    end
+  end
 end

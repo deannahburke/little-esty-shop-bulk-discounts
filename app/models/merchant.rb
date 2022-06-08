@@ -11,6 +11,13 @@ class Merchant < ApplicationRecord
     items.joins(:invoice_items).select("items.name, invoice_items.invoice_id").where.not("invoice_items.status = 'Shipped'")
   end
 
+  # def items_to_ship_ordered
+  #   x = items.select(:name, 'invoice_items.invoice_id', 'invoice_items.created_at AS created_at')
+  #       .where.not(invoice_items: {status: "Shipped"})
+  #       .order(created_at: :desc)
+  #       require "pry";binding.pry
+  # end
+
   def enabled_items
     items.where("items.status = 0")
   end
@@ -43,5 +50,14 @@ class Merchant < ApplicationRecord
         .group(:id)
         .order(total: :desc)
         .limit(5)
+  end
+
+  def fave_customers
+    customers.joins(invoices: :invoice_items)
+          .joins(invoices: :transactions)
+          .where(transactions: {result: 'success'})
+          .select("customers.*, count(result)as count")
+          .group(:id).order(count: :desc)
+          .limit(5)
   end
 end
