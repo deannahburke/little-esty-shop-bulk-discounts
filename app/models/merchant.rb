@@ -45,4 +45,13 @@ class Merchant < ApplicationRecord
         .order(total: :desc)
         .limit(5)
   end
+
+   def best_date
+    invoices.joins(:invoice_items)
+    .where("invoices.status = 'Completed'")
+    .select('invoices.*, sum(invoice_items.unit_price * invoice_items.quantity) AS revenue')
+    .group(:id)
+    .order("revenue desc")
+    .first.created_at_format
+  end
 end
