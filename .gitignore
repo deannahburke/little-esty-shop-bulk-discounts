@@ -29,3 +29,5 @@
 # Ignore simplecov coverage files
 /coverage/*
 /coverage/index.html
+.vscode/
+
