@@ -6,7 +6,7 @@ class MerchantItemsController < ApplicationController
     @top5items = @merchant.top_5_items
     @items_enabled = @merchant.enabled_items
     @items_disabled = @merchant.disabled_items
-    @items_best_day
+    @items_best_day = @items.best_day
   end
 
   def show
@@ -18,7 +18,7 @@ class MerchantItemsController < ApplicationController
     @merchant=Merchant.find(params[:merchant_id])
   end
 
-  def create 
+  def create
     merchant=Merchant.find(params[:merchant_id])
     item = merchant.items.create(item_params)
     item.save
@@ -39,7 +39,7 @@ class MerchantItemsController < ApplicationController
 
       if item_status == @item.status
     redirect_to "/merchants/#{@merchant.id}/items/#{@item.id}"
-      else 
+      else
     redirect_to "/merchants/#{@merchant.id}/items"
       end
     end
