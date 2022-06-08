@@ -7,7 +7,7 @@ Items:
 <% @invoice.invoice_items.each do |invoice_item| %>
 <p>Item Name: <%= invoice_item.item.name %> </p>
 <p>Quantity: <%= invoice_item.quantity %> </p>
-<p>Price Sold For: $<%= invoice_item.price_convert %> </p>
+<p>Price Sold For: $<%= invoice_item.price_convert.round(2) %> </p>
 <p>Item Status: <%= invoice_item.status %> </p>
 <br>
 <% end %>
