@@ -2,6 +2,7 @@
 
 <h5>Enabled Merchants:</h5>
 <% @merchants.each do |merchant| %>
+
 <% if merchant.enabled? %>
 <%=link_to "#{merchant.name}", admin_merchant_path(merchant.id) %>
 <%= button_to("Disable", admin_merchant_path(merchant.id), method: :patch, params: {enabled: false}) %>
@@ -18,5 +19,6 @@
 <h5>Top 5 Merchants:</h5>
 <% @merchants.top_five_revenue.each do |merchant| %>
 <p><%=link_to "#{merchant.name}", admin_merchant_path(merchant.id) %>
+<p><%= "Top selling date for #{merchant.name} was #{merchant.best_date}"%>
   Total Revenue: <%= number_to_currency(merchant.total) %>
 <% end %></p> </section>
