@@ -10,13 +10,12 @@ class Item < ApplicationRecord
   validates_presence_of :unit_price
 
   def best_day
-    invoices.joins(:invoice_items)
+    x = invoices.joins(:invoice_items)
     .where("invoices.status = 'completed'")
     .select('invoices.*, sum(invoice_items.unit_price * invoice_items.quantity) AS revenue')
     .group('invoices.id')
     .order("revenue desc")
-    .first
-    #to_date.to_s
+    .first.created_at.strftime("%m-%d-%Y")
   end
 
 end

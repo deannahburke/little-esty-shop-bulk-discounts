@@ -6,7 +6,7 @@
 <% @top5items.each do |item| %>
 <h3><%= link_to "#{item.name}", "/merchants/#{@merchant.id}/items/#{item.id}" %></h3><br>
 <strong><%= "Total Revenue = #{number_to_currency(item.total_revenue)}"%></strong><br>
-<strong><%= ("Top selling date for #{item.name} was #{item.best_day.created_at.strftime("%m-%d-%Y")}")%></strong><br>
+<strong><%= ("Top selling date for #{item.name} was #{item.best_day}")%></strong><br>
 <%end%>
 </section>
 
