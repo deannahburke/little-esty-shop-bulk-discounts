@@ -32,14 +32,14 @@ RSpec.describe 'the admin dashboard', type: :feature do
     @order7 = @beard.invoice_items.create!(quantity: 1, unit_price: 5099, status: "packaged", invoice_id: @invoice4.id)
   end
 
-  it 'has a header indicating I am on the admin dashboard' do
+  it 'has a header indicating I am on the admin dashboard', :vcr do
 
     visit '/admin'
 
     expect(page).to have_content("Admin Dashboard")
   end
 
-  it 'has link to admin merchants' do
+  it 'has link to admin merchants', :vcr do
     visit '/admin'
 
     expect(page).to have_link("Merchants")
@@ -49,7 +49,7 @@ RSpec.describe 'the admin dashboard', type: :feature do
     expect(current_path).to eq("/admin/merchants")
   end
 
-  it 'has link to admin invoices' do
+  it 'has link to admin invoices', :vcr do
     visit '/admin'
 
     expect(page).to have_link("Invoices")
@@ -59,7 +59,7 @@ RSpec.describe 'the admin dashboard', type: :feature do
     expect(current_path).to eq("/admin/invoices")
   end
 
-  it 'has a section for incomplete invoices' do
+  it 'has a section for incomplete invoices', :vcr do
     visit '/admin'
 
     expect(page).to have_content("Incomplete Invoices")
@@ -72,7 +72,7 @@ RSpec.describe 'the admin dashboard', type: :feature do
     end
   end
 
-  it 'each incomplete invoice links to invoice admin show page' do
+  it 'each incomplete invoice links to invoice admin show page', :vcr do
     visit '/admin'
 
     within '#incompleteInvoices' do
@@ -85,7 +85,7 @@ RSpec.describe 'the admin dashboard', type: :feature do
   end
 
   describe 'Top 5 customers' do
-    it 'can display the names of the top five customers with the most sucessful transactions, as well as the count' do
+    it 'can display the names of the top five customers with the most sucessful transactions, as well as the count', :vcr do
       billman = Merchant.create!(name: "Billman")
       parker = Merchant.create!(name: "Parker's Perfection Pagoda")
 
