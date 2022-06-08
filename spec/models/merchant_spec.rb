@@ -19,7 +19,7 @@ RSpec.describe Merchant, type: :model do
       @chris = Merchant.create!(name: "Chris")
       @mikedao = Merchant.create!(name: "Mike Dao")
 
-      @brenda = Customer.create!(first_name: "Brenda", last_name: "Bhoddavista")
+       @brenda = Customer.create!(first_name: "Brenda", last_name: "Bhoddavista")
 
       @bracelet = @billman.items.create!(name: "Bracelet", description: "shiny", unit_price: 1001)
       @mood = @billman.items.create!(name: "Mood Ring", description: "Moody", unit_price: 2002)
@@ -29,25 +29,25 @@ RSpec.describe Merchant, type: :model do
       @stuff4 = @chris.items.create!(name: "stuff6", description: "Moody", unit_price: 6002)
       @stuff5 = @mikedao.items.create!(name: "stuff8", description: "Moody", unit_price: 7002)
 
-      @invoice1 = @brenda.invoices.create!(status: "In Progress")
-      @invoice2 = @brenda.invoices.create!(status: "Completed")
-      @invoice3 = @brenda.invoices.create!(status: "Completed")
-      @invoice4 = @brenda.invoices.create!(status: "Completed")
+      @invoice1 = @brenda.invoices.create!(status: "in progress")
+      @invoice2 = @brenda.invoices.create!(status: "completed")
+      @invoice3 = @brenda.invoices.create!(status: "completed")
+      @invoice4 = @brenda.invoices.create!(status: "completed")
 
       @transaction1 = @invoice1.transactions.create!(credit_card_number: 4654405418249632, result: "success", created_at: Time.now, updated_at: Time.now)
       @transaction2 = @invoice2.transactions.create!(credit_card_number: 4654405418249632, result: "success", created_at: Time.now, updated_at: Time.now)
       @transaction3 = @invoice3.transactions.create!(credit_card_number: 4654405418249632, result: "success", created_at: Time.now, updated_at: Time.now)
       @transaction4 = @invoice4.transactions.create!(credit_card_number: 4654405418249632, result: "success", created_at: Time.now, updated_at: Time.now)
 
-      @order1 = @bracelet.invoice_items.create!(quantity: 1, unit_price: 1001, status: "Pending", invoice_id: @invoice1.id)
-      @order2 = @mood.invoice_items.create!(quantity: 1, unit_price: 2002, status: "Packaged", invoice_id: @invoice1.id)
-      @order3 = @mood.invoice_items.create!(quantity: 3, unit_price: 2002, status: "Shipped", invoice_id: @invoice2.id)
-      
-      InvoiceItem.create!(item_id: @stuff1.id, invoice_id: @invoice2.id, quantity: 1, unit_price: 1000, status: "Shipped")
-      InvoiceItem.create!(item_id: @stuff2.id, invoice_id: @invoice3.id, quantity: 2, unit_price: 1000, status: "Shipped")
-      InvoiceItem.create!(item_id: @stuff3.id, invoice_id: @invoice4.id, quantity: 3, unit_price: 1000, status: "Shipped")
-      InvoiceItem.create!(item_id: @stuff4.id, invoice_id: @invoice3.id, quantity: 4, unit_price: 1000, status: "Shipped")
-      InvoiceItem.create!(item_id: @stuff5.id, invoice_id: @invoice4.id, quantity: 5, unit_price: 1000, status: "Shipped")
+      @order1 = @bracelet.invoice_items.create!(quantity: 1, unit_price: 1001, status: "pending", invoice_id: @invoice1.id)
+      @order2 = @mood.invoice_items.create!(quantity: 1, unit_price: 2002, status: "packaged", invoice_id: @invoice1.id)
+      @order3 = @mood.invoice_items.create!(quantity: 3, unit_price: 2002, status: "shipped", invoice_id: @invoice2.id)
+
+      InvoiceItem.create!(item_id: @stuff1.id, invoice_id: @invoice2.id, quantity: 1, unit_price: 1000, status: "shipped")
+      InvoiceItem.create!(item_id: @stuff2.id, invoice_id: @invoice3.id, quantity: 2, unit_price: 1000, status: "shipped")
+      InvoiceItem.create!(item_id: @stuff3.id, invoice_id: @invoice4.id, quantity: 3, unit_price: 1000, status: "shipped")
+      InvoiceItem.create!(item_id: @stuff4.id, invoice_id: @invoice3.id, quantity: 4, unit_price: 1000, status: "shipped")
+      InvoiceItem.create!(item_id: @stuff5.id, invoice_id: @invoice4.id, quantity: 5, unit_price: 1000, status: "shipped")
     end
 
     it 'items_to_ship returns an array of items that are not shipped' do
@@ -156,6 +156,43 @@ RSpec.describe Merchant, type: :model do
       expect(@merchantD.best_date).to eq("Friday, March  2, 2012")
       expect(@merchantC.best_date).to eq("Sunday, March  4, 2012")
       expect(@merchantE.best_date).to eq("Tuesday, March  6, 2012")
+    end
+
+    it 'returns a merchants top five favorite customers' do
+      parker = Customer.create!(first_name: "Parker", last_name: "Thomson")
+      nick = Customer.create!(first_name: "Nick", last_name: "JC")
+      chris = Customer.create!(first_name: "Chris", last_name: "KJ")
+      sai = Customer.create!(first_name: "Sai", last_name: "EH")
+      deannah = Customer.create!(first_name: "Deannah", last_name: "DB")
+
+      invoice1 = @brenda.invoices.create!(status: "In Progress")
+      invoice2 = parker.invoices.create!(status: "In Progress")
+      invoice3 = nick.invoices.create!(status: "In Progress")
+      invoice4 = chris.invoices.create!(status: "In Progress")
+      invoice5 = sai.invoices.create!(status: "In Progress")
+      invoice6 = deannah.invoices.create!(status: "In Progress")
+
+      transaction1 = invoice1.transactions.create!(credit_card_number: 4654405418249632, result: "success", created_at: Time.now, updated_at: Time.now)
+      transaction2 = invoice1.transactions.create!(credit_card_number: 4654405418249632, result: "success", created_at: Time.now, updated_at: Time.now)
+      transaction3 = invoice2.transactions.create!(credit_card_number: 4654405418249632, result: "success", created_at: Time.now, updated_at: Time.now)
+      transaction4 = invoice2.transactions.create!(credit_card_number: 4654405418249632, result: "success", created_at: Time.now, updated_at: Time.now)
+      transaction5 = invoice3.transactions.create!(credit_card_number: 4654405418249632, result: "success", created_at: Time.now, updated_at: Time.now)
+      transaction6 = invoice3.transactions.create!(credit_card_number: 4654405418249632, result: "success", created_at: Time.now, updated_at: Time.now)
+      transaction7 = invoice4.transactions.create!(credit_card_number: 4654405418249632, result: "success", created_at: Time.now, updated_at: Time.now)
+      transaction8 = invoice4.transactions.create!(credit_card_number: 4654405418249632, result: "success", created_at: Time.now, updated_at: Time.now)
+      transaction9 = invoice5.transactions.create!(credit_card_number: 4654405418249632, result: "success", created_at: Time.now, updated_at: Time.now)
+      transaction10 = invoice5.transactions.create!(credit_card_number: 4654405418249632, result: "success", created_at: Time.now, updated_at: Time.now)
+      transaction11 = invoice6.transactions.create!(credit_card_number: 4654405418249632, result: "success", created_at: Time.now, updated_at: Time.now)
+
+      order1 = @bracelet.invoice_items.create!(quantity: 1, unit_price: 1001, status: "pending", invoice_id: invoice1.id)
+      order2 = @bracelet.invoice_items.create!(quantity: 1, unit_price: 1001, status: "pending", invoice_id: invoice2.id)
+      order3 = @bracelet.invoice_items.create!(quantity: 1, unit_price: 1001, status: "pending", invoice_id: invoice3.id)
+      order4 = @bracelet.invoice_items.create!(quantity: 1, unit_price: 1001, status: "pending", invoice_id: invoice4.id)
+      order5 = @bracelet.invoice_items.create!(quantity: 1, unit_price: 1001, status: "pending", invoice_id: invoice5.id)
+      order6 = @bracelet.invoice_items.create!(quantity: 1, unit_price: 1001, status: "pending", invoice_id: invoice6.id)
+
+      expect(@billman.fave_customers).to eq([@brenda, parker, nick, chris, sai])
+      expect(@billman.fave_customers).to_not eq([deannah])
     end
   end
 end

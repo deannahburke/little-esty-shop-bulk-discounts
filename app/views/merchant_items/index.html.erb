@@ -23,7 +23,7 @@
       <section id=<%="Item-#{item.name}"%>>
       <% button_label = "Disable" %>
       <%= button_to "#{button_label}", "/merchants/#{@merchant.id}/items/#{item.id}", params: {status: "disabled"}, method: :patch %>  <br>
-  
+
       </section>
 <
 <% end %>
@@ -40,7 +40,6 @@
       <section id=<%="Item-#{item.name}"%>><br>
       <%button_label = "Enable" %>
         <%= button_to "#{button_label}", "/merchants/#{@merchant.id}/items/#{item.id}", params: {status: "enabled"}, method: :patch %></strong><br>
-      </section> 
+      </section>
 
 <% end %>
-

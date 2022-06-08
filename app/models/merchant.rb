@@ -9,7 +9,7 @@ class Merchant < ApplicationRecord
   validates_presence_of :name
 
   def items_to_ship
-    items.joins(:invoice_items).select("items.name, invoice_items.invoice_id").where.not("invoice_items.status = 'Shipped'")
+    items.joins(:invoice_items).select("items.name, invoice_items.invoice_id").where.not("invoice_items.status = 'shipped'")
   end
 
   def enabled_items
@@ -46,6 +46,7 @@ class Merchant < ApplicationRecord
         .limit(5)
   end
 
+
    def best_date
     invoices.joins(:invoice_items)
     .where("invoices.status = 'Completed'")
@@ -53,5 +54,14 @@ class Merchant < ApplicationRecord
     .group(:id)
     .order("revenue desc")
     .first.created_at_format
+  end
+
+  def fave_customers
+    customers.joins(invoices: :invoice_items)
+          .joins(invoices: :transactions)
+          .where(transactions: {result: 'success'})
+          .select("customers.*, count(result)as count")
+          .group(:id).order(count: :desc)
+          .limit(5)
   end
 end
