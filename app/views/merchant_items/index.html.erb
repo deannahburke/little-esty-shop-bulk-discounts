@@ -6,7 +6,7 @@
 <% @top5items.each do |item| %>
 <h3><%= link_to "#{item.name}", "/merchants/#{@merchant.id}/items/#{item.id}" %></h3><br>
 <strong><%= "Total Revenue = #{number_to_currency(item.total_revenue)}"%></strong><br>
-<strong><%= ("Top selling date for #{item.name} was #{item.best_day}")%></strong><br>
+<strong><%= ("Top selling date for #{item.name} was #{item.best_day.created_at.strftime("%m-%d-%Y")}")%></strong><br>
 <%end%>
 </section>
 
@@ -23,7 +23,7 @@
       <section id=<%="Item-#{item.name}"%>>
       <% button_label = "Disable" %>
       <%= button_to "#{button_label}", "/merchants/#{@merchant.id}/items/#{item.id}", params: {status: "disabled"}, method: :patch %>  <br>
-  
+
       </section>
 <
 <% end %>
@@ -40,7 +40,6 @@
       <section id=<%="Item-#{item.name}"%>><br>
       <%button_label = "Enable" %>
         <%= button_to "#{button_label}", "/merchants/#{@merchant.id}/items/#{item.id}", params: {status: "enabled"}, method: :patch %></strong><br>
-      </section> 
+      </section>
 
 <% end %>
-

@@ -15,7 +15,7 @@ class Item < ApplicationRecord
     .select('invoices.*, sum(invoice_items.unit_price * invoice_items.quantity) AS revenue')
     .group('invoices.id')
     .order("revenue desc")
-    .first.created_at.strftime("%m-%d-%Y")
+    .first
     #to_date.to_s
   end
 
