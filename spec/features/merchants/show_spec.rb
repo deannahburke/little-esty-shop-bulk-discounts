@@ -107,7 +107,7 @@ RSpec.describe 'Merchant Show Dash' do
     end
   end
 
-  it 'displays the names of the top five customers' do
+  it 'displays the names of the top five customers', :vcr do
     visit "/merchants/#{@billman.id}/dashboard"
 
     within '#top5customers' do
