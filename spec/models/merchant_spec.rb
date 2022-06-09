@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Merchant, type: :model do
   describe 'relationships' do
     it {should have_many :items}
+    it {should have_many :bulk_discounts}
     it {should have_many(:invoice_items).through(:items)}
   end
 
@@ -107,8 +108,8 @@ RSpec.describe Merchant, type: :model do
       @invoiceA2 = @customer1.invoices.create!(status: "Completed", created_at: "2012-03-28 14:53:59")
       @invoiceA3 = @customer1.invoices.create!(status: "Completed", created_at: "2012-03-28 14:53:59")
       @invoiceB1 = @customer1.invoices.create!(status: "Completed", created_at: "2012-03-29 14:53:59")
-      @invoiceB2 = @customer1.invoices.create!(status: "Completed", created_at: "2012-03-30 14:53:59")      
-      @invoiceB3 = @customer1.invoices.create!(status: "Completed", created_at: "2012-03-30 14:53:59")     
+      @invoiceB2 = @customer1.invoices.create!(status: "Completed", created_at: "2012-03-30 14:53:59")
+      @invoiceB3 = @customer1.invoices.create!(status: "Completed", created_at: "2012-03-30 14:53:59")
       @invoiceD1 = @customer1.invoices.create!(status: "Completed", created_at: "2012-03-01 14:53:59")
       @invoiceD2 = @customer1.invoices.create!(status: "Completed", created_at: "2012-03-02 14:53:59")
       @invoiceD3 = @customer1.invoices.create!(status: "Completed", created_at: "2012-03-02 14:53:59")
