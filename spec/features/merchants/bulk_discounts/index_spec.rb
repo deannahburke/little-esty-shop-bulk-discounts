@@ -27,18 +27,30 @@ RSpec.describe 'the bulk discounts index', type: :feature do
   it 'displays all discounts for a merchant' do
     visit "/merchants/#{@billman.id}/bulk_discounts"
 
-      within "#currentDiscounts" do
-        within "#discount-#{@discount1.id}" do
-          expect(page).to have_content("Discount code: #{@discount1.name}")
-          expect(page).to have_content("Percent: #{@discount1.percentage}")
-          expect(page).to have_content("Quantity Limit: #{@discount1.quantity_threshold}")
-        end
-
-        within "#discount-#{@discount2.id}" do
-          expect(page).to have_content("Discount code: #{@discount2.name}")
-          expect(page).to have_content("Percent: #{@discount2.percentage}")
-          expect(page).to have_content("Quantity Limit: #{@discount2.quantity_threshold}")
-        end
+      within "#discount-#{@discount1.id}" do
+        expect(page).to have_content("Discount code: #{@discount1.name}")
+        expect(page).to have_content("Percent: #{@discount1.percentage}")
+        expect(page).to have_content("Quantity Limit: #{@discount1.quantity_threshold}")
+        expect(page).to_not have_content("#{@discount2.name}")
+        expect(page).to_not have_content("#{@discount2.percentage}")
+        expect(page).to_not have_content("#{@discount2.quantity_threshold}")
       end
+
+      within "#discount-#{@discount2.id}" do
+        expect(page).to have_content("Discount code: #{@discount2.name}")
+        expect(page).to have_content("Percent: #{@discount2.percentage}")
+        expect(page).to have_content("Quantity Limit: #{@discount2.quantity_threshold}")
+        expect(page).to_not have_content("#{@discount1.name}")
+        expect(page).to_not have_content("#{@discount1.percentage}")
+        expect(page).to_not have_content("#{@discount1.quantity_threshold}")
+      end
+  end
+
+
+  it 'links to each bulk discounts show page' do
+    visit "/merchants/#{@billman.id}/bulk_discounts"
+
+    click_link("#{@discount1.name}")
+    expect(current_path).to eq("/merchants/#{@billman.id}/bulk_discounts/#{@discount1.id}")
   end
 end
