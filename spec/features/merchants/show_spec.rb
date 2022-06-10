@@ -129,4 +129,12 @@ RSpec.describe 'Merchant Show Dash' do
       end
     end
   end
+
+  it 'displays a link to visit all discounts' do
+    visit "/merchants/#{@billman.id}/dashboard"
+    
+    within "#bulkDiscounts" do
+      expect(page).to have_content("Bulk Discounts")
+    end
+  end
 end
