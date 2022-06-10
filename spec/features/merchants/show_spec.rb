@@ -129,4 +129,24 @@ RSpec.describe 'Merchant Show Dash' do
       end
     end
   end
+
+  it 'has a section to visit all merchants bulk discounts' do
+    visit "/merchants/#{@billman.id}/dashboard"
+
+    within "#bulkDiscounts" do
+      expect(page).to have_content("Bulk Discounts")
+    end
+  end
+
+  it 'links to view all merchants discounts' do
+    visit "/merchants/#{@billman.id}/dashboard"
+
+    within "#bulkDiscounts" do
+      expect(page).to have_content("View Available Discounts")
+
+      click_link("View Available Discounts")
+
+      expect(current_path).to eq("/merchants/#{@billman.id}/bulk_discounts")
+    end
+  end
 end

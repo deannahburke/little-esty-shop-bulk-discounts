@@ -1,0 +1,12 @@
+<h1>Bulk Discounts Index</h1>
+
+<section id="currentDiscounts">
+<h3>Current discounts offered by <%= @merchant.name %></h3>
+<% @merchant.bulk_discounts.each do |discount| %>
+<div id="discount-<%= discount.id %>">
+  <p><h4>Discount code: <%= link_to "#{discount.name}", "/merchants/#{@merchant.id}/bulk_discounts/#{discount.id}" %></h4>
+  <p>Percent: <%= discount.percentage %>%</p>
+  <p>Quantity Limit: <%= discount.quantity_threshold %></p>
+</div>
+<% end %>
+</section>
