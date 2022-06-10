@@ -53,4 +53,14 @@ RSpec.describe 'the bulk discounts index', type: :feature do
     click_link("#{@discount1.name}")
     expect(current_path).to eq("/merchants/#{@billman.id}/bulk_discounts/#{@discount1.id}")
   end
+
+  it 'has a link to create a new discount' do
+    visit "/merchants/#{@billman.id}/bulk_discounts"
+
+    expect(page).to have_content("Create New Discount")
+
+    click_link("Create New Discount")
+
+    expect(current_path).to eq("/merchants/#{@billman.id}/bulk_discounts/new")
+  end
 end
