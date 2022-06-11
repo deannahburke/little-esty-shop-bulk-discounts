@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'delete bulk discount', type: :feature do
+RSpec.describe 'the bulk discounts edit', type: :feature do
   before(:each)do
     @billman = Merchant.create!(name: "Billman")
 
@@ -24,14 +24,11 @@ RSpec.describe 'delete bulk discount', type: :feature do
     @discount2 = @billman.bulk_discounts.create!(name: "Bulk15", percentage: 30, quantity_threshold: 15)
   end
 
-  it 'can delete a specific discount' do
-    visit "/merchants/#{@billman.id}/bulk_discounts"
+  it 'can edit a discount' do
+    visit "/merchants/#{@billman.id}/bulk_discounts/#{@discount1.id}"
 
-    within "#discount-#{@discount1.id}" do
-      click_link("Delete #{@discount1.name}")
-    end
-    expect(page).to_not have_content("Bulk10")
-    expect(page).to have_content("Bulk15")
-    expect(current_path).to eq("/merchants/#{@billman.id}/bulk_discounts")
+    click_link("Edit #{@discount1.name}")
+
+    expect(current_path).to eq("/merchants/#{@billman.id}/bulk_discounts/#{@discount1.id}/edit")
   end
 end
