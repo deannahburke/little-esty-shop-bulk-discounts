@@ -21,7 +21,7 @@ RSpec.describe InvoiceItem, type: :model do
 
     @discount1 = @billman.bulk_discounts.create!(name: "Bulk1", percentage: 10, quantity_threshold: 1)
     @discount2 = @billman.bulk_discounts.create!(name: "Bulk2", percentage: 15, quantity_threshold: 2)
-    @discount1 = @billman.bulk_discounts.create!(name: "Bulk5", percentage: 20, quantity_threshold: 5)
+    @discount3 = @billman.bulk_discounts.create!(name: "Bulk5", percentage: 20, quantity_threshold: 5)
   end
 
   describe 'relationships' do

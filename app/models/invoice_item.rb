@@ -16,4 +16,10 @@ class InvoiceItem < ApplicationRecord
   def belongs_to_merchant(merchant)
     item.merchant == merchant
   end
+
+  def greatest_percent_discount
+    bulk_discounts.where('quantity_threshold <= ?', quantity)
+    .order(percentage: :desc)
+    .first
+  end
 end
