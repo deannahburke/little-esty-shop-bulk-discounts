@@ -24,11 +24,28 @@ RSpec.describe 'the bulk discounts edit', type: :feature do
     @discount2 = @billman.bulk_discounts.create!(name: "Bulk15", percentage: 30, quantity_threshold: 15)
   end
 
-  it 'can edit a discount' do
+  it 'links to edit a discount' do
     visit "/merchants/#{@billman.id}/bulk_discounts/#{@discount1.id}"
 
     click_link("Edit #{@discount1.name}")
 
     expect(current_path).to eq("/merchants/#{@billman.id}/bulk_discounts/#{@discount1.id}/edit")
+  end
+
+  it 'can edit a discount' do
+    visit "/merchants/#{@billman.id}/bulk_discounts/#{@discount1.id}/edit"
+
+    fill_in('Name', with: 'Bulk25')
+    fill_in('Percentage', with: 25)
+    fill_in('Quantity Threshold', with: 25)
+    click_button('Edit Discount')
+
+    expect(current_path).to eq("/merchants/#{@billman.id}/bulk_discounts/#{@discount1.id}")
+    expect(page).to have_content("Bulk25")
+    expect(page).to have_content(25)
+    expect(page).to have_content(25)
+    expect(page).to_not have_content("Bulk10")
+    expect(page).to_not have_content(20)
+    expect(page).to_not have_content(10)  
   end
 end
