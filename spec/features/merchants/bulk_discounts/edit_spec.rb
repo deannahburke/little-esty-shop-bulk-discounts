@@ -46,6 +46,6 @@ RSpec.describe 'the bulk discounts edit', type: :feature do
     expect(page).to have_content(25)
     expect(page).to_not have_content("Bulk10")
     expect(page).to_not have_content(20)
-    expect(page).to_not have_content(10)  
+    expect(page).to_not have_content(10)
   end
 end
