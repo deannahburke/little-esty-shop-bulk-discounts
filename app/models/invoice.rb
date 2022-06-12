@@ -19,4 +19,8 @@ class Invoice < ApplicationRecord
   def self.oldest_first
     order(:created_at)
   end
+
+  def total_discounted_revenue
+    total = invoice_items.map { |invoice_item| invoice_item.total_price }.sum
+  end
 end
