@@ -21,6 +21,15 @@ class Invoice < ApplicationRecord
   end
 
   def total_discounted_revenue
-    total = invoice_items.map { |invoice_item| invoice_item.total_price }.sum
+    invoice_items.map { |invoice_item| invoice_item.total_price }.sum
+  end
+
+  def merchant_revenue(merchant)
+    items.where(merchant_id: merchant.id)
+    .sum('invoice_items.unit_price * invoice_items.quantity') * 0.01.to_f
+  end
+
+  def merchant_discount_revenue(merchant)
+    # require "pry";binding.pry
   end
 end
