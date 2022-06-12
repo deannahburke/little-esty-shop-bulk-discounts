@@ -22,4 +22,21 @@ class InvoiceItem < ApplicationRecord
     .order(percentage: :desc)
     .first
   end
+
+  def regular_price
+    (price_convert * quantity)
+  end
+
+  def discount_price
+    discount = regular_price * greatest_percent_discount.percentage
+    regular_price - (discount / 100).round(2)
+  end
+
+  def total_price
+    if greatest_percent_discount.present?
+      discount_price
+    else
+      regular_price
+    end
+  end
 end
