@@ -96,19 +96,21 @@ RSpec.describe 'Merchant invoices show page', type: :feature do
     expect(page).to_not have_content("Total Revenue: 168.42")
   end
 
-  # it 'can list total revenue including discounts for this merchant generated from the invoice' do
-  #   invoice6 = @brenda.invoices.create!(status: "In Progress")
-  #   @order8 = @bracelet.invoice_items.create!(quantity: 1, unit_price: 1001, status: "Pending", invoice_id: invoice6.id)
-  #   @order9 = @mood.invoice_items.create!(quantity: 5, unit_price: 2002, status: "Packaged", invoice_id: invoice6.id)
-  #
-  #   discount1 = @billman.bulk_discounts.create!(name: "Bulk2", percentage: 15, quantity_threshold: 2)
-  #   discount2 = @billman.bulk_discounts.create!(name: "Bulk5", percentage: 20, quantity_threshold: 5)
-  #
-  #   visit "/merchants/#{@billman.id}/invoices/#{invoice6.id}"
-  #
-  #   expect(page).to have_content("Total Revenue Including Bulk Discounts: 90.09")
-  #   expect(page).to_not have_content("Total Revenue Including Bulk Discounts: 110.11")
-  # end
+  it 'can list total revenue including discounts for this merchant generated on the invoice' do
+    invoice6 = @brenda.invoices.create!(status: "In Progress")
+    @order8 = @bracelet.invoice_items.create!(quantity: 1, unit_price: 1001, status: "Pending", invoice_id: invoice6.id)
+    @order9 = @mood.invoice_items.create!(quantity: 5, unit_price: 2002, status: "Packaged", invoice_id: invoice6.id)
+
+    discount1 = @billman.bulk_discounts.create!(name: "Bulk2", percentage: 15, quantity_threshold: 2)
+    discount2 = @billman.bulk_discounts.create!(name: "Bulk5", percentage: 20, quantity_threshold: 5)
+
+    visit "/merchants/#{@billman.id}/invoices/#{invoice6.id}"
+
+      within('#invoiceDetails') do
+        expect(page).to have_content("Total Revenue Including Bulk Discounts: 90.09")
+        expect(page).to_not have_content("Total Revenue Including Bulk Discounts: 110.11")
+      end 
+  end
 
   it 'has a drop down box for invoice item status that contains the current status', :vcr do
     visit "/merchants/#{@parker.id}/invoices/#{@invoice5.id}"

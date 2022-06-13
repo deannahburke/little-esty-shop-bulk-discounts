@@ -85,6 +85,17 @@ RSpec.describe Merchant, type: :model do
       expect(@billman.my_total_revenue(invoice3)).to_not eq(172.99)
     end
 
+    it 'my total discounted revenue returns single merchants discounted revenue' do
+      invoice5 = @brenda.invoices.create!(status: "Completed")
+      order8 = @bracelet.invoice_items.create!(quantity: 2, unit_price: 1001, status: "Pending", invoice_id: invoice5.id)
+      order9 = @mood.invoice_items.create!(quantity: 1, unit_price: 2002, status: "Pending", invoice_id: invoice5.id)
+      discount1 = @billman.bulk_discounts.create!(name: "Bulk2", percentage: 15, quantity_threshold: 2)
+      discount2 = @billman.bulk_discounts.create!(name: "Bulk5", percentage: 20, quantity_threshold: 5)
+
+      expect(@billman.my_discounted_revenue(invoice5)).to eq(37.04)
+      expect(@billman.my_discounted_revenue(invoice5)).to_not eq(40.04)
+    end
+
     it "gives top 5 merchants by total total_revenue" do
       expect(Merchant.top_five_revenue).to eq([@billman,@mikedao,@chris,@hall,@burke])
     end
@@ -195,5 +206,8 @@ RSpec.describe Merchant, type: :model do
       expect(@billman.fave_customers).to eq([@brenda, parker, nick, chris, sai])
       expect(@billman.fave_customers).to_not eq([deannah])
     end
+
+
+
   end
 end
