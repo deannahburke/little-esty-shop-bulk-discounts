@@ -4,6 +4,7 @@
   <p> Status: <%= "#{@invoice.status}"%> </p><br>
   <p> Created on: <%= "#{@invoice.created_at_format}" %> </p><br>
   <p>Total Revenue: <%= @merchant.my_total_revenue(@invoice).round(2) %></p>
+  <p>Total Revenue Including Bulk Discounts: <%= @merchant.my_discounted_revenue(@invoice) %>
   <h4>Customer:</h4>
   <p><%= "#{@invoice.customer.first_name} #{@invoice.customer.last_name}" %></p>
 </section>
