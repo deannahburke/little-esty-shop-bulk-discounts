@@ -128,7 +128,7 @@ RSpec.describe Invoice, type: :model do
 
       expect(invoice5.merchant_discount_revenue(@billman)).to eq(37.04)
       expect(invoice5.merchant_discount_revenue(parker)).to eq(nil)
-      expect(invoice5.merchant_discount_revenue(@billman)).to_not eq(40.04)
+      expect(invoice5.merchant_discount_revenue(@billman)).to_nto eq(40.04)
 
       expect(invoice6.merchant_discount_revenue(@billman)).to eq(34.04)
       expect(invoice6.merchant_discount_revenue(parker)).to eq(68.99)

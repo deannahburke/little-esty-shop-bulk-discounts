@@ -30,6 +30,13 @@ class Invoice < ApplicationRecord
   end
 
   def merchant_discount_revenue(merchant)
+    # merchant.total_discounted_revenue
+    
+    #on an invoice with multiple merchants, this method should return total discounted revenue for a single merchant
+    #merchant has items, bulk_discounts
+    #invoice has invoice_items, and items
+    #items belong to a merchant
+    #find all of a merchants items on an invoice that have had a discount applied and the sum of that total revenue
     # require "pry";binding.pry
   end
 end
