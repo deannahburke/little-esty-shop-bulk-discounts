@@ -20,7 +20,7 @@ RSpec.describe Merchant, type: :model do
       @chris = Merchant.create!(name: "Chris")
       @mikedao = Merchant.create!(name: "Mike Dao")
 
-       @brenda = Customer.create!(first_name: "Brenda", last_name: "Bhoddavista")
+      @brenda = Customer.create!(first_name: "Brenda", last_name: "Bhoddavista")
 
       @bracelet = @billman.items.create!(name: "Bracelet", description: "shiny", unit_price: 1001)
       @mood = @billman.items.create!(name: "Mood Ring", description: "Moody", unit_price: 2002)

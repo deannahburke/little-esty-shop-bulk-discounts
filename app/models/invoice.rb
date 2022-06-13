@@ -4,7 +4,8 @@ class Invoice < ApplicationRecord
   has_many :items, through: :invoice_items, dependent: :destroy
   has_many :merchants, through: :items
   has_many :transactions, dependent: :destroy
-  
+  has_many :bulk_discounts, through: :merchants
+
   validates_presence_of :status
 
   def total_revenue
@@ -17,5 +18,25 @@ class Invoice < ApplicationRecord
 
   def self.oldest_first
     order(:created_at)
+  end
+
+  def total_discounted_revenue
+    invoice_items.map { |invoice_item| invoice_item.total_price }.sum
+  end
+
+  def merchant_revenue(merchant)
+    items.where(merchant_id: merchant.id)
+    .sum('invoice_items.unit_price * invoice_items.quantity') * 0.01.to_f
+  end
+
+  def merchant_discount_revenue(merchant)
+    # merchant.total_discounted_revenue
+    
+    #on an invoice with multiple merchants, this method should return total discounted revenue for a single merchant
+    #merchant has items, bulk_discounts
+    #invoice has invoice_items, and items
+    #items belong to a merchant
+    #find all of a merchants items on an invoice that have had a discount applied and the sum of that total revenue
+    # require "pry";binding.pry
   end
 end
