@@ -9,7 +9,7 @@ class MerchantItemsController < ApplicationController
   end
 
   def show
-    @item=Item.find(params[:item_id])
+    @item=Item.find(params[:id])
   end
 
   def new
@@ -22,11 +22,11 @@ class MerchantItemsController < ApplicationController
   end
 
   def edit
-    @item = Item.find(params[:item_id])
+    @item = Item.find(params[:id])
   end
 
   def update
-    @item = Item.find(params[:item_id])
+    @item = Item.find(params[:id])
     item_status = @item.status
     @item.update(item_params)
     flash[:success] = 'You have successfully updated this item'

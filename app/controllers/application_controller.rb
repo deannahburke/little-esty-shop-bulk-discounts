@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def find_merchant
-    @merchant = Merchant.find(params[:merchant_id])
-  end
+    def find_merchant
+      @merchant = Merchant.find(params[:merchant_id])
+    end
 end
