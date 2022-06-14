@@ -1,10 +1,7 @@
 class HolidayFacade
 
   def self.next_three_holidays
-    connection = Faraday.new(url: 'https://date.nager.at/api/v3/')
-    response = connection.get('NextPublicHolidays/us')
-    data = JSON.parse(response.body, symbolize_names: true)
-
+    data = HolidayService.get_next_holidays
     holidays = []
     data.map do |holiday|
       holidays << Holiday.new(holiday)
