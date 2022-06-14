@@ -1,5 +1,4 @@
 class HolidayFacade
-
   def self.next_three_holidays
     data = HolidayService.get_next_holidays
     holidays = []
