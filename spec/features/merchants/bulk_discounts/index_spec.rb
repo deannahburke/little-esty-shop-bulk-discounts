@@ -67,6 +67,6 @@ RSpec.describe 'the bulk discounts index', type: :feature do
   it 'has a section for upcoming holidays' do
     visit "/merchants/#{@billman.id}/bulk_discounts"
 
-    expect(page).to have_content("Upcoming Holidays") 
+    expect(page).to have_content("Upcoming Holidays")
   end
 end
