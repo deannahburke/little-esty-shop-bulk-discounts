@@ -25,13 +25,13 @@ RSpec.describe 'delete bulk discount', type: :feature do
   end
 
   it 'can delete a specific discount' do
-    visit "/merchants/#{@billman.id}/bulk_discounts"
+    visit merchant_bulk_discounts_path(@billman)
 
     within "#discount-#{@discount1.id}" do
       click_link("Delete #{@discount1.name}")
     end
     expect(page).to_not have_content("Bulk10")
     expect(page).to have_content("Bulk15")
-    expect(current_path).to eq("/merchants/#{@billman.id}/bulk_discounts")
+    expect(current_path).to eq(merchant_bulk_discounts_path(@billman))
   end
 end

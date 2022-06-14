@@ -25,7 +25,7 @@ RSpec.describe 'the bulk discounts index', type: :feature do
   end
 
   it 'displays all discounts for a merchant' do
-    visit "/merchants/#{@billman.id}/bulk_discounts"
+    visit merchant_bulk_discounts_path(@billman)
 
       within "#discount-#{@discount1.id}" do
         expect(page).to have_content("Discount code: #{@discount1.name}")
@@ -48,24 +48,24 @@ RSpec.describe 'the bulk discounts index', type: :feature do
 
 
   it 'links to each bulk discounts show page' do
-    visit "/merchants/#{@billman.id}/bulk_discounts"
+    visit merchant_bulk_discounts_path(@billman)
 
     click_link("#{@discount1.name}")
-    expect(current_path).to eq("/merchants/#{@billman.id}/bulk_discounts/#{@discount1.id}")
+    expect(current_path).to eq(merchant_bulk_discount_path(@billman, @discount1))
   end
 
   it 'has a link to create a new discount' do
-    visit "/merchants/#{@billman.id}/bulk_discounts"
+    visit merchant_bulk_discounts_path(@billman)
 
     expect(page).to have_content("Create New Discount")
 
     click_link("Create New Discount")
 
-    expect(current_path).to eq("/merchants/#{@billman.id}/bulk_discounts/new")
+    expect(current_path).to eq(new_merchant_bulk_discount_path(@billman))
   end
 
   it 'has a section for upcoming holidays' do
-    visit "/merchants/#{@billman.id}/bulk_discounts"
+    visit merchant_bulk_discounts_path(@billman)
 
     expect(page).to have_content("Upcoming Holidays")
   end

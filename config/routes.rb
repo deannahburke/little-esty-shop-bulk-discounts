@@ -11,14 +11,10 @@ Rails.application.routes.draw do
   get "/merchants/:merchant_id/items/:item_id/edit", to: "merchant_items#edit"
   patch "/merchants/:merchant_id/items/:item_id", to: "merchant_items#update"
 
-  get "/merchants/:merchant_id/bulk_discounts", to: "bulk_discounts#index"
-  get "/merchants/:merchant_id/bulk_discounts/new", to: 'bulk_discounts#new'
-  get "/merchants/:merchant_id/bulk_discounts/:id", to: "bulk_discounts#show"
-  post "/merchants/:merchant_id/bulk_discounts", to: "bulk_discounts#create"
-  get "/merchants/:merchant_id/bulk_discounts/:id/edit", to: "bulk_discounts#edit"
-  patch "/merchants/:merchant_id/bulk_discounts/:id", to: "bulk_discounts#update"
-  delete "/merchants/:merchant_id/bulk_discounts/:id", to: 'bulk_discounts#destroy'
-
+  resources :merchants, only: :show do
+    resources :bulk_discounts
+  end
+  
   get "/merchants/:merchant_id/invoices/:invoice_id", to: "merchant_invoices#show"
   get "/merchants/:merchant_id/invoices", to: "merchant_invoices#index"
   patch "/merchants/:merchant_id/invoices/:invoice_id", to: "merchant_invoices#update"

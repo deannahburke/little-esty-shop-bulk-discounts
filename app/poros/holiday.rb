@@ -6,5 +6,4 @@ class Holiday
     @name = data[:name]
     @date = data[:date]
   end
-
 end
