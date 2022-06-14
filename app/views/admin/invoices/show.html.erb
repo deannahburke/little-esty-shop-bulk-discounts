@@ -13,6 +13,7 @@ Items:
 <% end %>
 
 Total Revenue from this Invoice: $<%= @invoice.total_revenue.round(2) %>
+<p>Total Discounted Revenue from this Invoice: $<%= @invoice.total_discounted_revenue %></p>
 <br>
 <p>Update Invoice Status:</p>
 <%= form_with url: "/admin/invoices/#{@invoice.id}", method: :patch, local: true do |form| %>
