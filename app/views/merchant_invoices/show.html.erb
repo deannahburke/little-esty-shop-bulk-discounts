@@ -16,6 +16,9 @@
       <p><%= invoice_item.item.name %></p>
       <p>Quantity: <%= invoice_item.quantity %></p>
       <p>Price: <%= invoice_item.unit_price %></p>
+        <% if invoice_item.greatest_percent_discount.present? %>
+          <p><%= link_to "Discount Applied", "/merchants/#{@merchant.id}/bulk_discounts/#{invoice_item.greatest_percent_discount.id}" %>
+        <% end %></p>
       <%= form_with url: "/merchants/#{@merchant.id}/invoices/#{@invoice.id}", method: :patch, local: true do |f| %>
         <%= f.label :status %>
         <%= f.select :status, ["Pending", "Packaged", "Shipped"], selected: "#{invoice_item.status}" %>

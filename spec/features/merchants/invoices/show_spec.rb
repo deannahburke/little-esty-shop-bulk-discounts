@@ -109,7 +109,28 @@ RSpec.describe 'Merchant invoices show page', type: :feature do
       within('#invoiceDetails') do
         expect(page).to have_content("Total Revenue Including Bulk Discounts: 90.09")
         expect(page).to_not have_content("Total Revenue Including Bulk Discounts: 110.11")
-      end 
+      end
+  end
+
+  it 'links to applied bulk discount show paid if applicable' do
+    invoice6 = @brenda.invoices.create!(status: "In Progress")
+    @order8 = @bracelet.invoice_items.create!(quantity: 1, unit_price: 1001, status: "Pending", invoice_id: invoice6.id)
+    @order9 = @mood.invoice_items.create!(quantity: 5, unit_price: 2002, status: "Packaged", invoice_id: invoice6.id)
+
+    discount1 = @billman.bulk_discounts.create!(name: "Bulk2", percentage: 15, quantity_threshold: 2)
+    discount2 = @billman.bulk_discounts.create!(name: "Bulk5", percentage: 20, quantity_threshold: 5)
+
+    visit "/merchants/#{@billman.id}/invoices/#{invoice6.id}"
+
+      within("#invoiceItem-#{@order8.id}") do
+        expect(page).to_not have_content("Discount Applied")
+      end
+
+      within("#invoiceItem-#{@order9.id}") do
+        click_link("Discount Applied")
+        expect(current_path).to eq("/merchants/#{@billman.id}/bulk_discounts/#{discount2.id}")
+        expect(current_path).to_not eq("/merchants/#{@billman.id}/bulk_discounts/#{discount1.id}")
+      end
   end
 
   it 'has a drop down box for invoice item status that contains the current status', :vcr do
