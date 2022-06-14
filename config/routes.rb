@@ -1,29 +1,14 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   get '/', to: 'welcome#index'
-
   get "/merchants/:merchant_id/dashboard", to: "merchants#show"
-
-  get "/merchants/:merchant_id/items", to: "merchant_items#index"
-  get "/merchants/:merchant_id/items/new", to: "merchant_items#new"
-  post "/merchants/:merchant_id/items", to: "merchant_items#create"
-  get "/merchants/:merchant_id/items/:item_id", to: "merchant_items#show"
-  get "/merchants/:merchant_id/items/:item_id/edit", to: "merchant_items#edit"
-  patch "/merchants/:merchant_id/items/:item_id", to: "merchant_items#update"
-
-  get "/merchants/:merchant_id/bulk_discounts", to: "bulk_discounts#index"
-  get "/merchants/:merchant_id/bulk_discounts/new", to: 'bulk_discounts#new'
-  get "/merchants/:merchant_id/bulk_discounts/:id", to: "bulk_discounts#show"
-  post "/merchants/:merchant_id/bulk_discounts", to: "bulk_discounts#create"
-  get "/merchants/:merchant_id/bulk_discounts/:id/edit", to: "bulk_discounts#edit"
-  patch "/merchants/:merchant_id/bulk_discounts/:id", to: "bulk_discounts#update"
-  delete "/merchants/:merchant_id/bulk_discounts/:id", to: 'bulk_discounts#destroy'
-
-  get "/merchants/:merchant_id/invoices/:invoice_id", to: "merchant_invoices#show"
-  get "/merchants/:merchant_id/invoices", to: "merchant_invoices#index"
-  patch "/merchants/:merchant_id/invoices/:invoice_id", to: "merchant_invoices#update"
-
   get '/admin', to: "admin/dashboard#index"
+
+  resources :merchants do
+    resources :items, except: [:destroy], controller: :merchant_items
+    resources :bulk_discounts
+    resources :invoices, only: [:index, :show, :update], controller: :merchant_invoices
+  end
 
   namespace :admin do
     resources :invoices, only: [:index, :show, :update]

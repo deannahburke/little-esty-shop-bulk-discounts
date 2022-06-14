@@ -12,7 +12,7 @@ RSpec.describe Item, type: :model do
   end
 
   describe 'Merchant items index page content' do
-    it 'shows all items for the merchant', :vcr do
+    it 'shows all items for the merchant' do
       expect(page).to have_content("Item1")
       expect(page).to have_content("Item11")
       expect(page).to_not have_content("Item2")
@@ -20,7 +20,7 @@ RSpec.describe Item, type: :model do
   end
 
   describe "instance variable" do
-    it "change the status of the item", :vcr do
+    it "change the status of the item" do
       @merchant1 = Merchant.create!(name: 'Merchant1')
       @item1 = @merchant1.items.create!(name: 'Item1', description: 'Description1', unit_price: 111)
       visit "/merchants/#{@merchant1.id}/items"
@@ -46,7 +46,7 @@ RSpec.describe Item, type: :model do
   end
 
   describe "Index Page Content" do
-    it "items are placed into the section, enabled or disabled, that matches their status", :vcr do
+    it "items are placed into the section, enabled or disabled, that matches their status" do
       item111 = @merchant1.items.create!(name: 'Item111', description: 'Description111', unit_price: 11111, status: 1)
       item1111 = @merchant1.items.create!(name: 'Item1111', description: 'Description1111', unit_price: 111111, status: 0)
 
@@ -70,14 +70,14 @@ RSpec.describe Item, type: :model do
   end
 
   describe 'creating a new item' do
-    it 'has button to link to a create new item page', :vcr do
+    it 'has button to link to a create new item page' do
       expect(page).to have_button("Create Item")
 
         click_button "Create Item"
       expect(current_path).to eq("/merchants/#{@merchant1.id}/items/new")
     end
 
-    it 'creates a new item after form completed', :vcr do
+    it 'creates a new item after form completed' do
       visit "/merchants/#{@merchant1.id}/items"
         click_on "Create Item"
         fill_in "Name", with: "NewItem"
@@ -92,7 +92,7 @@ RSpec.describe Item, type: :model do
   end
 
   describe "top 5 items" do
-    it 'lists the top 5 items by revenue', :vcr do
+    it 'lists the top 5 items by revenue' do
       @merchant1 = Merchant.create!(name: 'Merchant1')
       @itemA = @merchant1.items.create!(name: 'itemA', description: 'Description1', unit_price: 222, status: 0)
       @itemB = @merchant1.items.create!(name: 'itemB', description: 'Descriptions', unit_price: 222,status: 0)
@@ -135,7 +135,7 @@ RSpec.describe Item, type: :model do
       end
     end
 
-    it "shows the top sales date for each of the top 5 items", :vcr do
+    it "shows the top sales date for each of the top 5 items" do
 
       @merchant1 = Merchant.create!(name: 'Merchant1')
       @customer1 = Customer.create!(first_name: "Cuss", last_name: "Tomer")

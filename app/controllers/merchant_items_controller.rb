@@ -1,6 +1,7 @@
 class MerchantItemsController < ApplicationController
+  before_action :find_merchant
+
   def index
-    @merchant = Merchant.find(params[:merchant_id])
     @items = @merchant.items
     @top5items = @merchant.top_5_items
     @items_enabled = @merchant.enabled_items
@@ -8,30 +9,25 @@ class MerchantItemsController < ApplicationController
   end
 
   def show
-    @merchant=Merchant.find(params[:merchant_id])
-    @item=Item.find(params[:item_id])
+    @item=Item.find(params[:id])
   end
 
   def new
-    @merchant=Merchant.find(params[:merchant_id])
   end
 
   def create
-    merchant=Merchant.find(params[:merchant_id])
-    item = merchant.items.create(item_params)
+    item = @merchant.items.create(item_params)
     item.save
-    redirect_to "/merchants/#{merchant.id}/items"
+    redirect_to "/merchants/#{@merchant.id}/items"
   end
 
   def edit
-    @merchant = Merchant.find(params[:merchant_id])
-    @item = Item.find(params[:item_id])
+    @item = Item.find(params[:id])
   end
 
   def update
-    @item = Item.find(params[:item_id])
+    @item = Item.find(params[:id])
     item_status = @item.status
-    @merchant = Merchant.find(params[:merchant_id])
     @item.update(item_params)
     flash[:success] = 'You have successfully updated this item'
 

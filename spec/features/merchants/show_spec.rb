@@ -65,13 +65,13 @@ RSpec.describe 'Merchant Show Dash' do
     @transaction14 = @invoice6.transactions.create!(credit_card_number: 4923661117104166, result: "success")
   end
 
-  it "has the name of the merchant on the page", :vcr do
+  it "has the name of the merchant on the page" do
     visit "/merchants/#{@billman.id}/dashboard"
 
     expect(page).to have_content(@billman.name)
   end
 
-  it "has a link to merchant items index", :vcr do
+  it "has a link to merchant items index" do
     visit "/merchants/#{@billman.id}/dashboard"
 
     expect(page).to have_link("#{@billman.name}'s Items")
@@ -81,7 +81,7 @@ RSpec.describe 'Merchant Show Dash' do
     expect(page).to have_current_path("/merchants/#{@billman.id}/items")
   end
 
-  it "has a link to merchant invoices index", :vcr do
+  it "has a link to merchant invoices index" do
     visit "/merchants/#{@billman.id}/dashboard"
 
     expect(page).to have_link("#{@billman.name}'s Invoices")
@@ -91,7 +91,7 @@ RSpec.describe 'Merchant Show Dash' do
     expect(page).to have_current_path("/merchants/#{@billman.id}/invoices")
   end
 
-  it 'has a section for ready to ship items', :vcr do
+  it 'has a section for ready to ship items' do
     visit "/merchants/#{@billman.id}/dashboard"
 
     expect(page).to have_content("Items Ready to Ship")
@@ -107,7 +107,7 @@ RSpec.describe 'Merchant Show Dash' do
     end
   end
 
-  it 'displays the names of the top five customers', :vcr do
+  it 'displays the names of the top five customers' do
     visit "/merchants/#{@billman.id}/dashboard"
 
     within '#top5customers' do

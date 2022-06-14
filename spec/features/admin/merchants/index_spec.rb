@@ -6,19 +6,19 @@ RSpec.describe 'Admin Merchant Index Page' do
     @jacobs = Merchant.create!(name: "Jacobs")
   end
 
-  it "shows the name of each merchant", :vcr do
+  it "shows the name of each merchant" do
     visit admin_merchants_path
     expect(page).to have_content(@jacobs.name)
     expect(page).to have_content(@billman.name)
   end
 
-  it "has a link to show page for each merchant name", :vcr do
+  it "has a link to show page for each merchant name" do
     visit admin_merchants_path
     click_link ("#{@jacobs.name}")
     expect(current_path).to eq(admin_merchant_path(@jacobs.id))
   end
 
-  it "can update merchant status to enabled/disabled", :vcr do
+  it "can update merchant status to enabled/disabled" do
     visit admin_merchants_path
     expect(page).to_not have_button("Enable")
     expect(page).to have_button("Disable", count: 2)
@@ -29,13 +29,13 @@ RSpec.describe 'Admin Merchant Index Page' do
     expect(page).to have_button("Enable", count: 1)
   end
 
-  it "links to a new page for creating a new merchant ", :vcr do
+  it "links to a new page for creating a new merchant " do
     visit admin_merchants_path
     click_link "Create New Merchant"
     expect(current_path).to eq(new_admin_merchant_path)
   end
 
-  it "shows top 5 merchants by total revenue", :vcr do
+  it "shows top 5 merchants by total revenue" do
     @burke = Merchant.create!(name: "Burke")
     @hall = Merchant.create!(name: "Hall")
     @chris = Merchant.create!(name: "Chris")
@@ -82,7 +82,7 @@ RSpec.describe 'Admin Merchant Index Page' do
     end
   end
 
-  it "shows top 5 merchants highest sales date", :vcr do
+  it "shows top 5 merchants highest sales date" do
     @merchantA = Merchant.create!(name: "merchantA")
     @merchantB = Merchant.create!(name: "merchantB")
     @merchantD= Merchant.create!(name: "merchantD")

@@ -25,24 +25,24 @@ RSpec.describe 'the bulk discounts creation', type: :feature do
   end
 
   it 'can create a new bulk discount' do
-    visit "/merchants/#{@billman.id}/bulk_discounts/new"
+    visit new_merchant_bulk_discount_path(@billman)
 
     fill_in('Name', with: 'Bulk20')
     fill_in('Percentage', with: 25)
     fill_in('Quantity Threshold', with: 20)
     click_button('Create Discount')
 
-    expect(current_path).to eq("/merchants/#{@billman.id}/bulk_discounts")
+    expect(current_path).to eq(merchant_bulk_discounts_path(@billman))
     expect(page).to have_content("Bulk20")
   end
 
   it 'will flash error if fields are left blank' do
-    visit "/merchants/#{@billman.id}/bulk_discounts/new"
+    visit new_merchant_bulk_discount_path(@billman)
 
     fill_in('Name', with: 'Bulk Free')
     click_button('Create Discount')
 
     expect(page).to have_content("Information invalid, please try again")
-    expect(current_path).to eq("/merchants/#{@billman.id}/bulk_discounts/new")
+    expect(current_path).to eq(new_merchant_bulk_discount_path(@billman))
   end
 end

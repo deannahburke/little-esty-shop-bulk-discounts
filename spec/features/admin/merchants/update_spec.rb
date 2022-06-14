@@ -6,7 +6,7 @@ RSpec.describe "Admin Merchant Edit Page" do
     @jacobs = Merchant.create!(name: "Jacobs")
   end
 
-  it "can update merchant info", :vcr do
+  it "can update merchant info" do
     visit admin_merchant_path(@jacobs.id)
     click_link ("Update Merchant Info")
     expect(current_path).to eq(edit_admin_merchant_path(@jacobs.id))
@@ -19,5 +19,4 @@ RSpec.describe "Admin Merchant Edit Page" do
 
     expect(page).to_not have_content("Merchant Name: Jacobs")
   end
-
 end
