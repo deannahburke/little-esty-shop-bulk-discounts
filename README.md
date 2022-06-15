@@ -8,3 +8,4 @@
 
 [Visit the app on heroku!](https://bulk-discounts-db.herokuapp.com/)
 
+<img width="823" alt="Screen Shot 2022-06-14 at 6 17 24 PM" src="https://user-images.githubusercontent.com/98491210/173710388-fa103cf1-e4c7-4443-bf8a-c1deb9b718d3.png">
